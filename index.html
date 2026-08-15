@@ -25,6 +25,15 @@
       margin-top: 0;
       font-size: 1.15rem;
     }
+    .tip-box {
+      background-color: #eff6ff;
+      border-left: 4px solid #0284c7;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+      color: #1e40af;
+    }
     .scenario-desc {
       font-size: 0.95rem;
       margin-bottom: 12px;
@@ -97,11 +106,27 @@
     }
     .correct { color: #16a34a; }
     .incorrect { color: #dc2626; }
+    #success-banner {
+      display: none;
+      background-color: #f0fdf4;
+      border: 2px solid #22c55e;
+      color: #15803d;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
   <div id="score-display">Score: <span id="score">0</span> / 4</div>
+
+  <!-- Visual Key for Students -->
+  <div class="tip-box">
+    📌 <strong>Lab Tip:</strong> Pink highlighted rows mark test results that look unexpected or strange (outliers/anomalies).
+  </div>
 
   <!-- Scenario 1 -->
   <div class="card">
@@ -198,7 +223,18 @@
     <button onclick="checkAnswers()">Check Answers</button>
   </div>
 
+  <div id="success-banner">
+    🎉 Great job! You spotted all the patterns and anomalies! Scroll down on your Canvas page and click Next to continue.
+  </div>
+
   <script>
+    const explanations = {
+      1: "As heat increases from 10°C to 40°C, speed steadily goes up.",
+      2: "At 50°C, high heat usually slows enzymes down, making 45 bubbles an unexpected outlier.",
+      3: "0 cm breaks the steady growth pattern seen in all other weeks.",
+      4: "Sudden zeros in growth are usually human measurement errors or missed care."
+    };
+
     function checkAnswers() {
       let score = 0;
       const total = 4;
@@ -209,10 +245,10 @@
         
         if (select.value === 'correct') {
           score++;
-          fb.textContent = '✓ Correct!';
+          fb.textContent = '✓ Correct! ' + explanations[i];
           fb.className = 'feedback correct';
         } else if (select.value === 'wrong') {
-          fb.textContent = '✗ Try again!';
+          fb.textContent = '✗ Try again! Re-check the table.';
           fb.className = 'feedback incorrect';
         } else {
           fb.textContent = 'Please select an answer.';
@@ -221,6 +257,12 @@
       }
 
       document.getElementById('score').textContent = score;
+
+      if (score === total) {
+        document.getElementById('success-banner').style.display = 'block';
+      } else {
+        document.getElementById('success-banner').style.display = 'none';
+      }
     }
   </script>
 </body>
