@@ -100,14 +100,14 @@
     }
     .btn-container {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 16px;
     }
     button.submit-btn {
       background-color: #0284c7;
       color: white;
       border: none;
       padding: 10px 24px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
@@ -152,51 +152,54 @@
 
   <!-- Scenario 1 -->
   <div class="card">
-    <h2>Scenario 1: Heat and Enzyme Speed</h2>
-    <p class="scenario-desc">A student measures how fast an enzyme works at different heat levels. Higher numbers mean faster speed.</p>
+    <h2>Scenario 1: Exercise and Heart Rate</h2>
+    <p class="scenario-desc">A runner measures their heart rate every 5 minutes while running on a treadmill.</p>
     
     <table>
       <thead>
         <tr>
-          <th>Test</th>
-          <th>Heat (°C)</th>
-          <th>Speed (bubbles/min)</th>
+          <th>Time (minutes)</th>
+          <th>Running Speed</th>
+          <th>Heart Rate (bpm)</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>1</td><td>10°C</td><td>5</td></tr>
-        <tr><td>2</td><td>20°C</td><td>14</td></tr>
-        <tr><td>3</td><td>30°C</td><td>28</td></tr>
-        <tr><td>4</td><td>40°C</td><td>42</td></tr>
-        <tr><td>5</td><td>50°C</td><td>45</td></tr>
-        <tr><td>6</td><td>60°C</td><td>2</td></tr>
+        <tr><td>0 min</td><td>0 mph (Resting)</td><td>70 bpm</td></tr>
+        <tr><td>5 min</td><td>4 mph</td><td>100 bpm</td></tr>
+        <tr><td>10 min</td><td>6 mph</td><td>130 bpm</td></tr>
+        <tr><td>15 min</td><td>8 mph</td><td>0 bpm</td></tr>
+        <tr><td>20 min</td><td>8 mph</td><td>160 bpm</td></tr>
       </tbody>
     </table>
 
     <div class="question-block">
-      <label>1. What PATTERN do you see from 10°C to 40°C?</label>
+      <label>1. What PATTERN do you see from 0 to 10 minutes?</label>
       <select id="q1">
         <option value="">-- Choose Option --</option>
-        <option value="correct">📈 As heat goes up, speed goes up.</option>
-        <option value="wrong">📉 As heat goes up, speed goes down.</option>
-        <option value="wrong">➡️ Heat makes no difference.</option>
+        <option value="correct">As running speed increases, heart rate goes up.</option>
+        <option value="wrong">As running speed increases, heart rate goes down.</option>
+        <option value="wrong">Speed makes no difference to heart rate.</option>
       </select>
       <button class="hint-btn" onclick="toggleHint('h1')">💡 Need a hint?</button>
-      <div id="h1" class="hint-box">Look at the Speed column as heat goes from 10°C up to 40°C. Are the numbers getting bigger or smaller?</div>
+      <div id="h1" class="hint-box">Look at the Heart Rate column from 0 to 10 minutes (70 -> 100 -> 130). Are the numbers getting larger or smaller?</div>
       <div id="fb1" class="feedback"></div>
     </div>
 
     <div class="question-block">
-      <label>2. Which test is an ANOMALY (did not drop as expected from high heat)?</label>
+      <label>2. Which minute shows an ANOMALY (unexpected data point)?</label>
       <select id="q2">
         <option value="">-- Choose Option --</option>
-        <option value="wrong">Test 1 (10°C - 5 bubbles)</option>
-        <option value="correct">⚠️ Test 5 (50°C - 45 bubbles)</option>
-        <option value="wrong">Test 6 (60°C - 2 bubbles)</option>
+        <option value="wrong">0 minutes (70 bpm)</option>
+        <option value="correct">15 minutes (0 bpm)</option>
+        <option value="wrong">20 minutes (160 bpm)</option>
       </select>
       <button class="hint-btn" onclick="toggleHint('h2')">💡 Need a hint?</button>
-      <div id="h2" class="hint-box">High heat usually breaks enzymes and causes speed to drop suddenly (like in Test 6). Which test failed to drop?</div>
+      <div id="h2" class="hint-box">Look for the minute where heart rate suddenly drops to 0 while the runner is still sprinting at 8 mph!</div>
       <div id="fb2" class="feedback"></div>
+    </div>
+
+    <div class="btn-container">
+      <button class="submit-btn" onclick="checkPart1()">Check Scenario 1 Answers</button>
     </div>
   </div>
 
@@ -227,7 +230,7 @@
       <select id="q3">
         <option value="">-- Choose Option --</option>
         <option value="wrong">Week 1</option>
-        <option value="correct">⚠️ Week 3</option>
+        <option value="correct">Week 3</option>
         <option value="wrong">Week 5</option>
       </select>
       <button class="hint-btn" onclick="toggleHint('h3')">💡 Need a hint?</button>
@@ -247,10 +250,10 @@
       <div id="h4" class="hint-box">Think about what humans do during a lab. Mistakes in measuring or forgetting care often cause sudden weird zeros.</div>
       <div id="fb4" class="feedback"></div>
     </div>
-  </div>
 
-  <div class="btn-container">
-    <button class="submit-btn" onclick="checkAnswers()">Check Answers</button>
+    <div class="btn-container">
+      <button class="submit-btn" onclick="checkPart2()">Check Scenario 2 Answers</button>
+    </div>
   </div>
 
   <div id="success-banner">
@@ -259,49 +262,70 @@
 
   <script>
     const explanations = {
-      1: "As heat increases from 10°C to 40°C, speed steadily goes up from 5 to 42.",
-      2: "At 50°C, high heat usually slows enzymes down, making 45 bubbles an unexpected outlier.",
+      1: "As exercise intensity increases, heart rate steadily increases from 70 to 130 bpm.",
+      2: "0 bpm while running at 8 mph is an anomaly caused by a loose heart rate monitor sensor.",
       3: "0 cm breaks the steady growth pattern seen in all other weeks.",
       4: "Sudden zeros in growth are usually human measurement errors or missed care."
     };
 
+    let answeredCorrect = { 1: false, 2: false, 3: false, 4: false };
+
     function toggleHint(id) {
       const box = document.getElementById(id);
-      if (box.style.display === "block") {
-        box.style.display = "none";
-      } else {
-        box.style.display = "block";
+      box.style.display = (box.style.display === "block") ? "none" : "block";
+    }
+
+    function updateScore() {
+      let count = 0;
+      for (let i = 1; i <= 4; i++) {
+        if (answeredCorrect[i]) count++;
+      }
+      document.getElementById('score').textContent = count;
+      if (count === 4) {
+        document.getElementById('success-banner').style.display = 'block';
       }
     }
 
-    function checkAnswers() {
-      let score = 0;
-      const total = 4;
-
-      for (let i = 1; i <= total; i++) {
+    function checkPart1() {
+      for (let i = 1; i <= 2; i++) {
         const select = document.getElementById('q' + i);
         const fb = document.getElementById('fb' + i);
-        
         if (select.value === 'correct') {
-          score++;
           fb.textContent = '✓ Correct! ' + explanations[i];
           fb.className = 'feedback correct';
+          answeredCorrect[i] = true;
         } else if (select.value === 'wrong') {
           fb.textContent = '✗ Try again! Click "Need a hint?" above if you get stuck.';
           fb.className = 'feedback incorrect';
+          answeredCorrect[i] = false;
         } else {
           fb.textContent = 'Please select an answer.';
           fb.className = 'feedback incorrect';
+          answeredCorrect[i] = false;
         }
       }
+      updateScore();
+    }
 
-      document.getElementById('score').textContent = score;
-
-      if (score === total) {
-        document.getElementById('success-banner').style.display = 'block';
-      } else {
-        document.getElementById('success-banner').style.display = 'none';
+    function checkPart2() {
+      for (let i = 3; i <= 4; i++) {
+        const select = document.getElementById('q' + i);
+        const fb = document.getElementById('fb' + i);
+        if (select.value === 'correct') {
+          fb.textContent = '✓ Correct! ' + explanations[i];
+          fb.className = 'feedback correct';
+          answeredCorrect[i] = true;
+        } else if (select.value === 'wrong') {
+          fb.textContent = '✗ Try again! Click "Need a hint?" above if you get stuck.';
+          fb.className = 'feedback incorrect';
+          answeredCorrect[i] = false;
+        } else {
+          fb.textContent = 'Please select an answer.';
+          fb.className = 'feedback incorrect';
+          answeredCorrect[i] = false;
+        }
       }
+      updateScore();
     }
   </script>
 </body>
