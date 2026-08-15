@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pattern & Anomaly Practice Lab</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      margin: 0;
+      padding: 16px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #0369a1;
+      margin-top: 0;
+      font-size: 1.15rem;
+    }
+    .scenario-desc {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      color: #334155;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .question-block {
+      margin-bottom: 14px;
+      background-color: #f8fafc;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+    select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background-color: #fff;
+      font-size: 0.9rem;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #0284c7;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0369a1;
+    }
+    #score-display {
+      text-align: right;
+      font-weight: bold;
+      color: #0369a1;
+      margin-bottom: 12px;
+    }
+    .feedback {
+      margin-top: 6px;
+      font-size: 0.88rem;
+      font-weight: bold;
+    }
+    .correct { color: #16a34a; }
+    .incorrect { color: #dc2626; }
+  </style>
+</head>
+<body>
+
+  <div id="score-display">Score: <span id="score">0</span> / 4</div>
+
+  <!-- Scenario 1 -->
+  <div class="card">
+    <h2>Scenario 1: Heat and Enzyme Speed</h2>
+    <p class="scenario-desc">A student measures how fast an enzyme works at different heat levels. Higher numbers mean faster speed.</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>Heat (°C)</th>
+          <th>Speed (bubbles/min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>10°C</td><td>5</td></tr>
+        <tr><td>2</td><td>20°C</td><td>14</td></tr>
+        <tr><td>3</td><td>30°C</td><td>28</td></tr>
+        <tr><td>4</td><td>40°C</td><td>42</td></tr>
+        <tr style="background-color: #fff1f2;"><td>5</td><td>50°C</td><td>45 (Outlier)</td></tr>
+        <tr><td>6</td><td>60°C</td><td>2</td></tr>
+      </tbody>
+    </table>
+
+    <div class="question-block">
+      <label>1. What PATTERN do you see from 10°C to 40°C?</label>
+      <select id="q1">
+        <option value="">-- Choose Option --</option>
+        <option value="correct">📈 As heat goes up, speed goes up.</option>
+        <option value="wrong">📉 As heat goes up, speed goes down.</option>
+        <option value="wrong">➡️ Heat makes no difference.</option>
+      </select>
+      <div id="fb1" class="feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <label>2. Which test is an ANOMALY (did not drop as expected from high heat)?</label>
+      <select id="q2">
+        <option value="">-- Choose Option --</option>
+        <option value="wrong">Test 1 (10°C - 5 bubbles)</option>
+        <option value="correct">⚠️ Test 5 (50°C - 45 bubbles)</option>
+        <option value="wrong">Test 6 (60°C - 2 bubbles)</option>
+      </select>
+      <div id="fb2" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- Scenario 2 -->
+  <div class="card">
+    <h2>Scenario 2: Plant Growth</h2>
+    <p class="scenario-desc">A plant is measured every week for 5 weeks.</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Light Hours</th>
+          <th>Plant Height</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Week 1</td><td>8 hrs</td><td>2 cm</td></tr>
+        <tr><td>Week 2</td><td>8 hrs</td><td>4 cm</td></tr>
+        <tr style="background-color: #fff1f2;"><td>Week 3</td><td>8 hrs</td><td>0 cm (Outlier)</td></tr>
+        <tr><td>Week 4</td><td>8 hrs</td><td>8 cm</td></tr>
+        <tr><td>Week 5</td><td>8 hrs</td><td>10 cm</td></tr>
+      </tbody>
+    </table>
+
+    <div class="question-block">
+      <label>3. Which week shows an ANOMALY (unexpected data point)?</label>
+      <select id="q3">
+        <option value="">-- Choose Option --</option>
+        <option value="wrong">Week 1</option>
+        <option value="correct">⚠️ Week 3</option>
+        <option value="wrong">Week 5</option>
+      </select>
+      <div id="fb3" class="feedback"></div>
+    </div>
+
+    <div class="question-block">
+      <label>4. What is the most likely cause of the Week 3 anomaly?</label>
+      <select id="q4">
+        <option value="">-- Choose Option --</option>
+        <option value="wrong">The plant grew into a tree.</option>
+        <option value="correct">Someone made a measurement error or forgot to water it.</option>
+        <option value="wrong">The sun stopped shining.</option>
+      </select>
+      <div id="fb4" class="feedback"></div>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button onclick="checkAnswers()">Check Answers</button>
+  </div>
+
+  <script>
+    function checkAnswers() {
+      let score = 0;
+      const total = 4;
+
+      for (let i = 1; i <= total; i++) {
+        const select = document.getElementById('q' + i);
+        const fb = document.getElementById('fb' + i);
+        
+        if (select.value === 'correct') {
+          score++;
+          fb.textContent = '✓ Correct!';
+          fb.className = 'feedback correct';
+        } else if (select.value === 'wrong') {
+          fb.textContent = '✗ Try again!';
+          fb.className = 'feedback incorrect';
+        } else {
+          fb.textContent = 'Please select an answer.';
+          fb.className = 'feedback incorrect';
+        }
+      }
+
+      document.getElementById('score').textContent = score;
+    }
+  </script>
+</body>
+</html>
