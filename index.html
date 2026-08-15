@@ -76,11 +76,33 @@
       background-color: #fff;
       font-size: 0.9rem;
     }
+    .hint-btn {
+      background: none;
+      border: none;
+      color: #0284c7;
+      font-size: 0.82rem;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 4px 0;
+      margin-top: 6px;
+      text-decoration: underline;
+      display: inline-block;
+    }
+    .hint-box {
+      display: none;
+      background-color: #fefce8;
+      border: 1px solid #fef08a;
+      color: #854d0e;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.83rem;
+      margin-top: 6px;
+    }
     .btn-container {
       text-align: center;
       margin-top: 20px;
     }
-    button {
+    button.submit-btn {
       background-color: #0284c7;
       color: white;
       border: none;
@@ -90,7 +112,7 @@
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
+    button.submit-btn:hover {
       background-color: #0369a1;
     }
     #score-display {
@@ -159,6 +181,8 @@
         <option value="wrong">📉 As heat goes up, speed goes down.</option>
         <option value="wrong">➡️ Heat makes no difference.</option>
       </select>
+      <button class="hint-btn" onclick="toggleHint('h1')">💡 Need a hint?</button>
+      <div id="h1" class="hint-box">Look at the Speed column as heat goes from 10°C up to 40°C. Are the numbers getting bigger or smaller?</div>
       <div id="fb1" class="feedback"></div>
     </div>
 
@@ -170,6 +194,8 @@
         <option value="correct">⚠️ Test 5 (50°C - 45 bubbles)</option>
         <option value="wrong">Test 6 (60°C - 2 bubbles)</option>
       </select>
+      <button class="hint-btn" onclick="toggleHint('h2')">💡 Need a hint?</button>
+      <div id="h2" class="hint-box">Look for the pink row! High heat usually breaks enzymes, so a high speed of 45 at 50°C is an unexpected result.</div>
       <div id="fb2" class="feedback"></div>
     </div>
   </div>
@@ -204,6 +230,8 @@
         <option value="correct">⚠️ Week 3</option>
         <option value="wrong">Week 5</option>
       </select>
+      <button class="hint-btn" onclick="toggleHint('h3')">💡 Need a hint?</button>
+      <div id="h3" class="hint-box">Look for the week where growth suddenly dropped to 0 cm instead of continuing to grow taller.</div>
       <div id="fb3" class="feedback"></div>
     </div>
 
@@ -215,12 +243,14 @@
         <option value="correct">Someone made a measurement error or forgot to water it.</option>
         <option value="wrong">The sun stopped shining.</option>
       </select>
+      <button class="hint-btn" onclick="toggleHint('h4')">💡 Need a hint?</button>
+      <div id="h4" class="hint-box">Think about what humans do during a lab. Mistakes in measuring or forgetting care often cause sudden weird zeros.</div>
       <div id="fb4" class="feedback"></div>
     </div>
   </div>
 
   <div class="btn-container">
-    <button onclick="checkAnswers()">Check Answers</button>
+    <button class="submit-btn" onclick="checkAnswers()">Check Answers</button>
   </div>
 
   <div id="success-banner">
@@ -229,11 +259,20 @@
 
   <script>
     const explanations = {
-      1: "As heat increases from 10°C to 40°C, speed steadily goes up.",
+      1: "As heat increases from 10°C to 40°C, speed steadily goes up from 5 to 42.",
       2: "At 50°C, high heat usually slows enzymes down, making 45 bubbles an unexpected outlier.",
       3: "0 cm breaks the steady growth pattern seen in all other weeks.",
       4: "Sudden zeros in growth are usually human measurement errors or missed care."
     };
+
+    function toggleHint(id) {
+      const box = document.getElementById(id);
+      if (box.style.display === "block") {
+        box.style.display = "none";
+      } else {
+        box.style.display = "block";
+      }
+    }
 
     function checkAnswers() {
       let score = 0;
@@ -248,7 +287,7 @@
           fb.textContent = '✓ Correct! ' + explanations[i];
           fb.className = 'feedback correct';
         } else if (select.value === 'wrong') {
-          fb.textContent = '✗ Try again! Re-check the table.';
+          fb.textContent = '✗ Try again! Click "Need a hint?" above if you get stuck.';
           fb.className = 'feedback incorrect';
         } else {
           fb.textContent = 'Please select an answer.';
